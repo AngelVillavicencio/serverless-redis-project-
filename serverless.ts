@@ -1,6 +1,6 @@
 import type { AWS } from "@serverless/typescript";
 
-import createToken from "@functions/tokens/create";
+import createToken from "@functions/tokens";
 //import getInfo from "@functions/getInfo";
 
 const serverlessConfiguration: AWS = {

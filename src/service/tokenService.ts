@@ -19,10 +19,6 @@ export default class TokenService {
       };
     }
 
-
-    const response_db_
-
-
     return {
       status: "200",
       token: "",
