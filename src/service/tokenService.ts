@@ -1,6 +1,7 @@
 //import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import isValidToken from "src/helpers/validateToken";
 import Token from "../model/token";
+import { generateUniqueToken } from "src/helpers";
 
 export default class TokenService {
   private Tablename: string = "TodosTable";
@@ -19,9 +20,13 @@ export default class TokenService {
       };
     }
 
+    // create token
+
+    const token_created = generateUniqueToken(16);
+
     return {
       status: "200",
-      token: "",
+      token: token_created,
       error: "",
     };
   }

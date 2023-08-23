@@ -34,7 +34,7 @@ const createTokenHandler: ValidatedEventAPIGatewayProxyEvent<
       });
     }
     return formatJSONResponse({
-      status: 200,
+      status: 201,
       token: token_response.token,
     });
   } catch (e) {

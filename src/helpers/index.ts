@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 enum CardType {
   Visa = "Visa",
   Mastercard = "Mastercard",
@@ -135,4 +136,21 @@ export function validateExpirationMonth(
   }
 
   return { valid: true };
+}
+
+export function generateUniqueToken(length: number): string {
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let token = "";
+
+  while (token.length < length) {
+    const uuidSegment = v4().replace(/-/g, "");
+    for (const char of uuidSegment) {
+      if (characters.includes(char) && token.length < length) {
+        token += char;
+      }
+    }
+  }
+
+  return token;
 }
