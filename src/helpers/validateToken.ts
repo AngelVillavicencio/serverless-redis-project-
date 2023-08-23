@@ -1,10 +1,11 @@
+import Token from "src/model/token";
 import {
   validateCard,
   validateEmail,
   validateExpirationMonth,
   validateExpirationYear,
 } from ".";
-const isValidToken = (info) => {
+const isValidToken = (info: Token) => {
   const { email, card_number, cvv, expiration_year, expiration_month } = info;
 
   // validar numero de tarjeta
