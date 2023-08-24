@@ -137,19 +137,29 @@ export function validateExpirationMonth(
   return { valid: true };
 }
 
-export function generateUniqueToken(length: number): string {
-  const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let token = "";
+const caracteresPermitidos: string =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const codigoLength: number = 16;
 
-  while (token.length < length) {
-    const uuidSegment = v4().replace(/-/g, "");
-    for (const char of uuidSegment) {
-      if (characters.includes(char) && token.length < length) {
-        token += char;
-      }
-    }
+export function generarCodigoAleatorio(): string {
+  let codigo: string = "";
+  for (let i = 0; i < codigoLength; i++) {
+    codigo += caracteresPermitidos.charAt(
+      Math.floor(Math.random() * caracteresPermitidos.length)
+    );
+  }
+  return codigo;
+}
+
+export function esCodigoValido(codigo: string): boolean {
+  if (codigo.length !== codigoLength) {
+    return false;
   }
 
-  return token;
+  const formatoValido: RegExp = /^[a-zA-Z0-9]+$/;
+  if (!formatoValido.test(codigo)) {
+    return false;
+  }
+
+  return true;
 }

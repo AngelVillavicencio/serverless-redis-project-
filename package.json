@@ -5,7 +5,7 @@
   "main": "serverless.ts",
   "scripts": {
     "start": "serverless offline",
-    "test": ""
+    "test": "run jest"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -21,6 +21,7 @@
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.25",
     "esbuild": "^0.14.11",
+    "jest": "^29.6.4",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.34.0",
     "serverless-esbuild": "^1.23.3",

@@ -1,8 +1,7 @@
 //import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import isValidToken from "src/helpers/createToken";
 import Token from "../model/token";
-import { generateUniqueToken } from "src/helpers";
-import { validateToken } from "src/helpers/validateToken";
+import { esCodigoValido, generarCodigoAleatorio } from "src/helpers";
 
 export default class TokenService {
   constructor() {}
@@ -23,7 +22,7 @@ export default class TokenService {
 
       // create token
 
-      const token_created = generateUniqueToken(16);
+      const token_created = generarCodigoAleatorio();
       await client.set(token_created, JSON.stringify(card), {
         EX: 10,
       });
@@ -53,17 +52,15 @@ export default class TokenService {
       | string;
     error: string;
   }> {
-    const isCardValid = validateToken(token);
+    const isCardValid = esCodigoValido(token);
 
-    /*if (!isCardValid) {
+    if (!isCardValid) {
       return {
         status: "400",
         response: "",
         error: "Formato incorrecto",
       };
-    }*/
-
-    // create token
+    }
 
     const info = await client.get(token);
 
