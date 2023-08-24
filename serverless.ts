@@ -1,6 +1,7 @@
 import type { AWS } from "@serverless/typescript";
 
-import createToken from "@functions/tokens";
+import createToken from "@functions/create_token";
+import getCard from "@functions/get_card";
 //import getInfo from "@functions/getInfo";
 
 const serverlessConfiguration: AWS = {
@@ -20,7 +21,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { createToken },
+  functions: { createToken, getCard },
   package: { individually: true },
   custom: {
     esbuild: {
