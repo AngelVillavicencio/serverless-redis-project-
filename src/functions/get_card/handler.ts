@@ -4,6 +4,7 @@ import { middyfy } from "@libs/lambda";
 
 import schema from "./schema";
 import TokenService from "src/service/tokenService";
+import initializeRedis from "@libs/db-redis";
 
 const getCardHandler: ValidatedEventAPIGatewayProxyEvent<
   typeof schema
@@ -12,8 +13,10 @@ const getCardHandler: ValidatedEventAPIGatewayProxyEvent<
     const tokenService = new TokenService();
 
     const {
-      body: { token },
+      queryStringParameters: { token },
     } = event;
+
+    const client = await initializeRedis();
 
     const token_response: {
       status: string;
@@ -26,11 +29,18 @@ const getCardHandler: ValidatedEventAPIGatewayProxyEvent<
           }
         | string;
       error: string;
-    } = await tokenService.getCard(token);
+    } = await tokenService.getCard(client, token);
 
     if (token_response.status == "400") {
       return formatJSONResponse({
         status: 400,
+        message: token_response.error,
+      });
+    }
+
+    if (token_response.status == "404") {
+      return formatJSONResponse({
+        status: 404,
         message: token_response.error,
       });
     }

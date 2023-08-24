@@ -5,6 +5,7 @@ import { middyfy } from "@libs/lambda";
 import schema from "./schema";
 import TokenService from "src/service/tokenService";
 import { v4 } from "uuid";
+import initializeRedis from "@libs/db-redis";
 
 const createTokenHandler: ValidatedEventAPIGatewayProxyEvent<
   typeof schema
@@ -12,12 +13,13 @@ const createTokenHandler: ValidatedEventAPIGatewayProxyEvent<
   try {
     const id = v4();
     const tokenService = new TokenService();
+    const client = await initializeRedis();
 
     const {
       body: { card_number, email, cvv, expiration_year, expiration_month },
     } = event;
     const token_response: { status: string; token: string; error: string } =
-      await tokenService.createToken({
+      await tokenService.createToken(client, {
         tokenId: id,
         email: email,
         card_number: card_number,

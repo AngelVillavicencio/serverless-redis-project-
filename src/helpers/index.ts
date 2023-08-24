@@ -71,7 +71,6 @@ export function validateEmail(email: string): EmailValidationResult {
   if (/^.{5,100}$/.test(cleanedEmail)) {
     const domainMatch = cleanedEmail.match(/@(.+)$/);
     if (domainMatch) {
-      console.log("Entro a domain", domainMatch);
       const domain = domainMatch[1];
       if (
         domain === EmailDomain.Gmail ||
@@ -154,5 +153,3 @@ export function generateUniqueToken(length: number): string {
 
   return token;
 }
-
-
